@@ -1,3 +1,8 @@
 .profile__info {
-  padding-left: 30px;
+  display: grid;
+  grid-template-areas:
+  "name edit-button"
+  "about about";
+  gap: 16px 18px;
+  align-items: end;
 }
