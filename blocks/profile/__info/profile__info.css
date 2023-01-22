@@ -1,8 +1,6 @@
 .profile__info {
-  display: grid;
-  grid-template-areas:
-  "name edit-button"
-  "about about";
-  gap: 16px 18px;
-  align-items: end;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  row-gap: 16px;
 }
