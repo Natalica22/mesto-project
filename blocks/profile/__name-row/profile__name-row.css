@@ -1,5 +1,5 @@
 .profile__name-row {
   display: flex;
   column-gap: 18px;
-  align-items: baseline;
+  align-items: end;
 }

@@ -1,7 +1,11 @@
 .profile__about {
   margin: 0;
+  max-width: 336px;
   font-weight: 400;
   font-size: 18px;
   line-height: 1.22;
   color: #fff;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }

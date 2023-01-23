@@ -1,6 +1,6 @@
 .profile__info {
   display: flex;
   flex-direction: column;
-  align-self: center;
-  row-gap: 16px;
+  justify-content: center;
+  row-gap: 7px;
 }
