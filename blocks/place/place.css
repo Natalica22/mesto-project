@@ -4,4 +4,7 @@
   border-radius: 10px;
   overflow: hidden;
   background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
