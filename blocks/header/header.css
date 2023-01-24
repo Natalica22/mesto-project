@@ -1,7 +1,7 @@
 .header {
   min-width: 880px;
-  min-height: 74px;
-  padding-top: 45px;
+  padding: 45px 0 41px;
   display: flex;
   border-bottom: 1px solid rgba(84, 84, 84, .7);
+  box-sizing: border-box;
 }
