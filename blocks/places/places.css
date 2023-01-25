@@ -1,8 +1,10 @@
 .places {
   min-width: 100%;
+  max-width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fit, 282px);
   gap: 20px 17px;
+  justify-content: center;
   box-sizing: border-box;
   padding: 50px 0 66px;
 }
