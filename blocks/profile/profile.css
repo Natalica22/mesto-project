@@ -6,3 +6,10 @@
   align-items: center;
   box-sizing: border-box;
 }
+
+@media screen and (max-width: 767px) {
+  .profile {
+    flex-direction: column;
+    row-gap: 36px;
+  }
+}

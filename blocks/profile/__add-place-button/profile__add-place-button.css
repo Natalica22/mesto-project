@@ -7,3 +7,9 @@
   background-repeat: no-repeat;
   background-position: center;
 }
+
+@media screen and (max-width: 767px) {
+  .profile__add-place-button {
+    min-width: 282px;
+  }
+}
