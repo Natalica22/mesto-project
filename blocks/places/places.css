@@ -8,3 +8,10 @@
   box-sizing: border-box;
   padding: 50px 0 66px;
 }
+
+@media screen and (max-width: 767px) {
+  .places {
+    padding-top: 36px;
+    padding-bottom: 48px;
+  }
+}
