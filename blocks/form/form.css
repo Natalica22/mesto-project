@@ -1,0 +1,9 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  min-width: calc(100% - 72px);
+  align-self: center;
+  row-gap: 48px;
+  padding-bottom: 37px;
+  box-sizing: border-box;
+}

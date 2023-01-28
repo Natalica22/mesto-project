@@ -1,0 +1,7 @@
+.form__info {
+  padding: 0;
+  border: 0;
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
+}
