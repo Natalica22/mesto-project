@@ -10,6 +10,7 @@
   font-weight: 400;
   line-height: 1.2;
   cursor: pointer;
+  transition: opacity .5s linear;
 }
 
 @media screen and (max-width: 767px) {
@@ -17,4 +18,8 @@
     height: 46px;
     font-size: 14px;
   }
+}
+
+.form__save-button:hover {
+  opacity: .8;
 }

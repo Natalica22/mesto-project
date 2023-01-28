@@ -6,4 +6,9 @@
   border: 0;
   background-image: url("../../../images/like.svg");
   cursor: pointer;
+  transition: opacity .5s linear;
+}
+
+.place__like-button:hover {
+  opacity: .5;
 }
