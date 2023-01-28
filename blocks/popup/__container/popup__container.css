@@ -7,3 +7,9 @@
   flex-direction: column;
   position: relative;
 }
+
+@media screen and (max-width: 767px) {
+  .popup__container {
+    min-width: 282px;
+  }
+}
