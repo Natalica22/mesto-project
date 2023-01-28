@@ -11,6 +11,7 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 767px) {

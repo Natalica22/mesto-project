@@ -5,4 +5,5 @@
   background: none;
   border: 0;
   background-image: url("../../../images/like.svg");
+  cursor: pointer;
 }
