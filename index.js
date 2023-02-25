@@ -1,15 +1,21 @@
 const content = document.querySelector('.content');
+
+const profileName = content.querySelector('.profile__name');
+const profileAbout = content.querySelector('.profile__about');
+
 const profileEditButton = content.querySelector('.profile__edit-button');
 
 const profileEditPopup = document.querySelector('.popup');
 const profileEditPopupCloseButton = profileEditPopup.querySelector('.popup__close');
+const profileEditForm = profileEditPopup.querySelector('.form__info');
+const profileEditFormNameInput = profileEditForm.querySelector('input[name=name]');
+const profileEditFormAboutInput = profileEditForm.querySelector('input[name=about]');
+
 
 
 profileEditButton.addEventListener('click', (event) => {
-  const profileName = content.querySelector('.profile__name').textContent;
-  profileEditPopup.querySelector('.form__info input[name=name]').value = profileName;
-  const profileAbout = content.querySelector('.profile__about').textContent;
-  profileEditPopup.querySelector('.form__info input[name=about]').value = profileAbout;
+  profileEditFormNameInput.value = profileName.textContent;
+  profileEditFormAboutInput.value = profileAbout.textContent;
 
   profileEditPopup.classList.add('popup_opened');
 });
