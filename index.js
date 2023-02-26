@@ -126,6 +126,10 @@ function createPlaceCard(place) {
   placeCardImage.src = place.link;
   placeCardImage.alt = place.name;
   placeCard.querySelector('.place__title').textContent = place.name;
+//лайк карточки
+  placeCard.querySelector('.place__like-button').addEventListener('click', (evt) =>
+    evt.target.classList.toggle('place__like-button_active'));
+
   placesSection.prepend(placeCard);
 }
 
