@@ -111,12 +111,14 @@ const initialPlaces = [
 const placeTemplate = content.querySelector('#place').content;
 const placesSection = content.querySelector('.places');
 
-//создание карточек на основе мест по умолчанию
-initialPlaces.forEach((place) => {
+function createPlaceCard(place) {
   const placeCard = placeTemplate.querySelector('.place').cloneNode(true);
   const placeCardImage = placeCard.querySelector('.place__image');
   placeCardImage.src = place.link;
   placeCardImage.alt = place.name;
   placeCard.querySelector('.place__title').textContent = place.name;
   placesSection.prepend(placeCard);
-});
+}
+
+//создание карточек на основе мест по умолчанию
+initialPlaces.forEach(createPlaceCard);
