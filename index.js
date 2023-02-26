@@ -119,6 +119,9 @@ const initialPlaces = [
 //поиск шаблона карточки места
 const placeTemplate = content.querySelector('#place').content;
 const placesSection = content.querySelector('.places');
+const imagePopup = page.querySelector('#popup-image');
+const imagePopupImage = imagePopup.querySelector('.popup__image');
+const imagePopupImageTitle = imagePopup.querySelector('.popup__image-title');
 
 function createPlaceCard(place) {
   const placeCard = placeTemplate.querySelector('.place').cloneNode(true);
@@ -132,8 +135,20 @@ function createPlaceCard(place) {
 //удаление карточки
   placeCard.querySelector('.place__delete-button').addEventListener('click', (evt) =>
     placeCard.remove());
+//открытие карточки
+  placeCardImage.addEventListener('click', (evt) => {
+    imagePopupImage.src = place.link;
+    imagePopupImage.alt = place.name;
+    imagePopupImageTitle.textContent = place.name;
+
+    imagePopup.classList.add('popup_opened');
+  });
+
   placesSection.prepend(placeCard);
 }
+
+//закрытие popup места
+imagePopup.querySelector('.popup__close').addEventListener('click', (evt) => closePopup(imagePopup));
 
 //создание карточек на основе мест по умолчанию
 initialPlaces.forEach(createPlaceCard);
