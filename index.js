@@ -18,6 +18,9 @@ function createFormPopup(title, formName, fields) {
     input.classList.add('form__text');
     formInfo.append(input);
   });
+  //работа кнопки закрытия popup
+  popup.querySelector('.popup__close').addEventListener('click', (evt) => closePopup(popup));
+
   page.append(popup);
   return popup;
 }
@@ -35,8 +38,6 @@ const profileEditPopup = createFormPopup('Редактировать профи�
 
 // поиск кнопки редактирования профиля
 const profileEditButton = content.querySelector('.profile__edit-button');
-//поиск кнопки закрытия popup
-const profileEditPopupCloseButton = profileEditPopup.querySelector('.popup__close');
 
 //поиск формы и полей для профиля
 const profileEditForm = profileEditPopup.querySelector('.form');
@@ -55,9 +56,6 @@ profileEditButton.addEventListener('click', (evt) => {
 
   profileEditPopup.classList.add('popup_opened');
 });
-
-//закрытие редактирования профиля
-profileEditPopupCloseButton.addEventListener('click', (evt) => closePopup(profileEditPopup));
 
 //сохранение введеных данных в форму редактирования профиля
 profileEditForm.addEventListener('submit', (evt) => {
@@ -78,8 +76,6 @@ const createPlacePopup = createFormPopup('Новое место', 'place',
 
 //поиск кнопки открытия формы добавления места
 const createPlaceButton = content.querySelector('.profile__add-place-button');
-//поиск кнопки закрытия формы добавления места
-const createPlacePopupCloseButton = createPlacePopup.querySelector('.popup__close');
 
 //поиск формы создаения карточки
 const createPlaceForm = createPlacePopup.querySelector('.form');
@@ -94,9 +90,6 @@ createPlaceButton.addEventListener('click', (evt) => {
 
   createPlacePopup.classList.add('popup_opened');
 });
-
-//закрытие формы создания места
-createPlacePopupCloseButton.addEventListener('click', (evt) => closePopup(createPlacePopup));
 
 //создание объекта для описания места
 function createPlaceObject(name, link) {
