@@ -95,6 +95,16 @@ createPlaceButton.addEventListener('click', (evt) => {
   createPlacePopup.classList.add('popup_opened');
 });
 
+//добавление карточки
+createPlaceForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+
+  createPlaceCard(
+    createPlaceObject(createPlaceFormNameInput.value, createPlaceFormImageInput.value));
+
+  closePopup(createPlacePopup);
+});
+
 //создание объекта для описания места
 function createPlaceObject(name, link) {
   return {
@@ -102,16 +112,6 @@ function createPlaceObject(name, link) {
     link: link
   }
 }
-
-//места по умолчанию
-const initialPlaces = [
-  createPlaceObject('Архыз', 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'),
-  createPlaceObject('Челябинская область', 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'),
-  createPlaceObject('Иваново', 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'),
-  createPlaceObject('Камчатка', 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'),
-  createPlaceObject('Холмогорский район', 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'),
-  createPlaceObject('Байкал', 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg')
-];
 
 //поиск шаблона карточки места
 const placeTemplate = content.querySelector('#place').content;
@@ -147,15 +147,15 @@ function createPlaceCard(place) {
 //закрытие popup места
 addCloseListener(imagePopup);
 
+//места по умолчанию
+const initialPlaces = [
+  createPlaceObject('Архыз', 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'),
+  createPlaceObject('Челябинская область', 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'),
+  createPlaceObject('Иваново', 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'),
+  createPlaceObject('Камчатка', 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'),
+  createPlaceObject('Холмогорский район', 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'),
+  createPlaceObject('Байкал', 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg')
+];
+
 //создание карточек на основе мест по умолчанию
 initialPlaces.forEach(createPlaceCard);
-
-//добавление карточки
-createPlaceForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-
-  createPlaceCard(
-    createPlaceObject(createPlaceFormNameInput.value, createPlaceFormImageInput.value));
-
-  closePopup(createPlacePopup);
-});
