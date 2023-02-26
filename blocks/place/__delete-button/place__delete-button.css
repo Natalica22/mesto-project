@@ -11,7 +11,3 @@
   top: 20px;
   right: 20px;
 }
-
-.place__delete-button:hover {
-  opacity: .6;
-}

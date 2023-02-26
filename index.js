@@ -129,7 +129,10 @@ function createPlaceCard(place) {
 //лайк карточки
   placeCard.querySelector('.place__like-button').addEventListener('click', (evt) =>
     evt.target.classList.toggle('place__like-button_active'));
-
+//удаление карточки
+  placeCard.querySelector('.place__delete-button').addEventListener('click', (evt) =>
+    placeCard.remove());
+//добавление в начало
   placesSection.prepend(placeCard);
 }
 
