@@ -29,8 +29,8 @@ const profileAbout = content.querySelector('.profile__about');
 //создание формы для профиля
 const profileEditPopup = createFormPopup('Редактировать профиль', 'profile',
   [
-    {type: 'text', name: 'name', placeholder: 'Имя'},
-    {type: 'text', name: 'about', placeholder: 'О себе'}
+    { type: 'text', name: 'name', placeholder: 'Имя' },
+    { type: 'text', name: 'about', placeholder: 'О себе' }
   ]);
 
 // поиск кнопки редактирования профиля
@@ -71,10 +71,10 @@ profileEditForm.addEventListener('submit', (evt) => {
 
 //создание формы добавления места
 const createPlacePopup = createFormPopup('Новое место', 'place',
-[
-  {type: 'text', name: 'name', placeholder: 'Название'},
-  {type: 'url', name: 'imageUrl', placeholder: 'Ссылка на картинку'}
-]);
+  [
+    { type: 'text', name: 'name', placeholder: 'Название' },
+    { type: 'url', name: 'imageUrl', placeholder: 'Ссылка на картинку' }
+  ]);
 
 //поиск кнопки открытия формы добавления места
 const createPlaceButton = content.querySelector('.profile__add-place-button');
@@ -129,13 +129,13 @@ function createPlaceCard(place) {
   placeCardImage.src = place.link;
   placeCardImage.alt = place.name;
   placeCard.querySelector('.place__title').textContent = place.name;
-//лайк карточки
+  //лайк карточки
   placeCard.querySelector('.place__like-button').addEventListener('click', (evt) =>
     evt.target.classList.toggle('place__like-button_active'));
-//удаление карточки
+  //удаление карточки
   placeCard.querySelector('.place__delete-button').addEventListener('click', (evt) =>
     placeCard.remove());
-//открытие карточки
+  //открытие карточки
   placeCardImage.addEventListener('click', (evt) => {
     imagePopupImage.src = place.link;
     imagePopupImage.alt = place.name;
