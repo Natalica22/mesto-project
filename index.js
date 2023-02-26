@@ -3,6 +3,15 @@ const content = page.querySelector('.content');
 
 const popupFormTemplate = document.querySelector('#form-popup').content;
 
+//закрытие popup
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
+}
+
+function addCloseListener(popup) {
+  popup.querySelector('.popup__close').addEventListener('click', (evt) => closePopup(popup));
+}
+
 //создание формы popup
 function createFormPopup(title, formName, fields) {
   const popup = popupFormTemplate.querySelector('.popup').cloneNode(true);
@@ -19,7 +28,7 @@ function createFormPopup(title, formName, fields) {
     formInfo.append(input);
   });
   //работа кнопки закрытия popup
-  popup.querySelector('.popup__close').addEventListener('click', (evt) => closePopup(popup));
+  addCloseListener(popup);
 
   page.append(popup);
   return popup;
@@ -43,11 +52,6 @@ const profileEditButton = content.querySelector('.profile__edit-button');
 const profileEditForm = profileEditPopup.querySelector('.form');
 const profileEditFormNameInput = profileEditForm.querySelector('input[name=name]');
 const profileEditFormAboutInput = profileEditForm.querySelector('input[name=about]');
-
-//закрытие popup
-function closePopup(popup) {
-  popup.classList.remove('popup_opened');
-}
 
 //открытие редактирования профиля
 profileEditButton.addEventListener('click', (evt) => {
@@ -141,7 +145,7 @@ function createPlaceCard(place) {
 }
 
 //закрытие popup места
-imagePopup.querySelector('.popup__close').addEventListener('click', (evt) => closePopup(imagePopup));
+addCloseListener(imagePopup);
 
 //создание карточек на основе мест по умолчанию
 initialPlaces.forEach(createPlaceCard);
