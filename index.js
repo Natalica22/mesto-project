@@ -81,8 +81,17 @@ const createPlaceButton = content.querySelector('.profile__add-place-button');
 //поиск кнопки закрытия формы добавления места
 const createPlacePopupCloseButton = createPlacePopup.querySelector('.popup__close');
 
+//поиск формы создаения карточки
+const createPlaceForm = createPlacePopup.querySelector('.form');
+const createPlaceFormNameInput = createPlaceForm.querySelector('input[name=name]');
+const createPlaceFormImageInput = createPlaceForm.querySelector('input[name=imageUrl]');
+
 //открытие формы создания места
 createPlaceButton.addEventListener('click', (evt) => {
+  //очистка полей формы
+  createPlaceFormNameInput.value = '';
+  createPlaceFormImageInput.value = '';
+
   createPlacePopup.classList.add('popup_opened');
 });
 
@@ -122,3 +131,13 @@ function createPlaceCard(place) {
 
 //создание карточек на основе мест по умолчанию
 initialPlaces.forEach(createPlaceCard);
+
+//добавление карточки
+createPlaceForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+
+  createPlaceCard(
+    createPlaceObject(createPlaceFormNameInput.value, createPlaceFormImageInput.value));
+
+  closePopup(createPlacePopup);
+});
