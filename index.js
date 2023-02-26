@@ -1,11 +1,11 @@
 const page = document.querySelector('.page');
 const content = page.querySelector('.content');
 
-const popupTemplate = document.querySelector('#popup').content;
+const popupFormTemplate = document.querySelector('#form-popup').content;
 
 //создание формы popup
-function createPopup(title, formName, fields) {
-  const popup = popupTemplate.querySelector('.popup').cloneNode(true);
+function createFormPopup(title, formName, fields) {
+  const popup = popupFormTemplate.querySelector('.popup').cloneNode(true);
   popup.querySelector('.popup__title').textContent = title;
   popup.querySelector('.form').name = formName;
 
@@ -27,7 +27,7 @@ const profileName = content.querySelector('.profile__name');
 const profileAbout = content.querySelector('.profile__about');
 
 //создание формы для профиля
-const profileEditPopup = createPopup('Редактировать профиль', 'profile',
+const profileEditPopup = createFormPopup('Редактировать профиль', 'profile',
   [
     {type: 'text', name: 'name', placeholder: 'Имя'},
     {type: 'text', name: 'about', placeholder: 'О себе'}
@@ -70,7 +70,7 @@ profileEditForm.addEventListener('submit', (evt) => {
 });
 
 //создание формы добавления места
-const createPlacePopup = createPopup('Новое место', 'place',
+const createPlacePopup = createFormPopup('Новое место', 'place',
 [
   {type: 'text', name: 'name', placeholder: 'Название'},
   {type: 'url', name: 'imageUrl', placeholder: 'Ссылка на картинку'}
@@ -132,7 +132,6 @@ function createPlaceCard(place) {
 //удаление карточки
   placeCard.querySelector('.place__delete-button').addEventListener('click', (evt) =>
     placeCard.remove());
-//добавление в начало
   placesSection.prepend(placeCard);
 }
 
