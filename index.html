@@ -43,19 +43,35 @@
     <footer class="footer">
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
-    <template id="form-popup">
-      <div class="popup">
-        <div class="popup__container">
-          <button type="reset" aria-label="close" class="popup__close button-hover"></button>
-          <h2 class="popup__title"></h2>
-          <form class="form">
-            <fieldset class="form__info">
-            </fieldset>
-            <button type="submit" class="form__save-button">Сохранить</button>
-          </form>
-        </div>
+
+    <div id="profile-popup" class="popup">
+      <div class="popup__container">
+        <button type="reset" aria-label="close" class="popup__close button-hover"></button>
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <form class="form">
+          <fieldset class="form__info">
+            <input type="text" name="name" class="form__text" placeholder="Имя">
+            <input type="text" name="about" class="form__text" placeholder="О себе">
+          </fieldset>
+          <button type="submit" class="form__save-button">Сохранить</button>
+        </form>
       </div>
-    </template>
+    </div>
+
+    <div id="place-popup" class="popup">
+      <div class="popup__container">
+        <button type="reset" aria-label="close" class="popup__close button-hover"></button>
+        <h2 class="popup__title">Новое место</h2>
+        <form class="form">
+          <fieldset class="form__info">
+            <input type="text" name="name" class="form__text" placeholder="Название">
+            <input type="url" name="imageUrl" class="form__text" placeholder="Ссылка на картинку">
+          </fieldset>
+          <button type="submit" class="form__save-button">Создать</button>
+        </form>
+      </div>
+    </div>
+
     <div id="popup-image" class="popup popup_background_dark">
       <div class="popup__container-image">
         <button type="reset" aria-label="close" class="popup__close button-hover"></button>

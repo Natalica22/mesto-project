@@ -1,8 +1,6 @@
 const page = document.querySelector('.page');
 const content = page.querySelector('.content');
 
-const popupFormTemplate = document.querySelector('#form-popup').content;
-
 //закрытие popup
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
@@ -12,38 +10,13 @@ function addCloseListener(popup) {
   popup.querySelector('.popup__close').addEventListener('click', (evt) => closePopup(popup));
 }
 
-//создание формы popup
-function createFormPopup(title, formName, fields) {
-  const popup = popupFormTemplate.querySelector('.popup').cloneNode(true);
-  popup.querySelector('.popup__title').textContent = title;
-  popup.querySelector('.form').name = formName;
-
-  const formInfo = popup.querySelector('.form__info');
-  fields.forEach((field) => {
-    const input = document.createElement('input');
-    input.type = field.type;
-    input.name = field.name;
-    input.placeholder = field.placeholder;
-    input.classList.add('form__text');
-    formInfo.append(input);
-  });
-  //работа кнопки закрытия popup
-  addCloseListener(popup);
-
-  page.append(popup);
-  return popup;
-}
-
 //поиск текущих значений профиля
 const profileName = content.querySelector('.profile__name');
 const profileAbout = content.querySelector('.profile__about');
 
-//создание формы для профиля
-const profileEditPopup = createFormPopup('Редактировать профиль', 'profile',
-  [
-    { type: 'text', name: 'name', placeholder: 'Имя' },
-    { type: 'text', name: 'about', placeholder: 'О себе' }
-  ]);
+// поиск popup для профиля
+const profileEditPopup = page.querySelector('#profile-popup');
+addCloseListener(profileEditPopup);
 
 // поиск кнопки редактирования профиля
 const profileEditButton = content.querySelector('.profile__edit-button');
@@ -71,38 +44,35 @@ profileEditForm.addEventListener('submit', (evt) => {
   closePopup(profileEditPopup);
 });
 
-//создание формы добавления места
-const createPlacePopup = createFormPopup('Новое место', 'place',
-  [
-    { type: 'text', name: 'name', placeholder: 'Название' },
-    { type: 'url', name: 'imageUrl', placeholder: 'Ссылка на картинку' }
-  ]);
+// поиск popup места
+const placePopup = page.querySelector('#place-popup');
+addCloseListener(placePopup);
 
 //поиск кнопки открытия формы добавления места
-const createPlaceButton = content.querySelector('.profile__add-place-button');
+const placeButton = content.querySelector('.profile__add-place-button');
 
 //поиск формы создаения карточки
-const createPlaceForm = createPlacePopup.querySelector('.form');
-const createPlaceFormNameInput = createPlaceForm.querySelector('input[name=name]');
-const createPlaceFormImageInput = createPlaceForm.querySelector('input[name=imageUrl]');
+const placeForm = placePopup.querySelector('.form');
+const placeFormNameInput = placeForm.querySelector('input[name=name]');
+const placeFormImageInput = placeForm.querySelector('input[name=imageUrl]');
 
 //открытие формы создания места
-createPlaceButton.addEventListener('click', (evt) => {
+placeButton.addEventListener('click', (evt) => {
   //очистка полей формы
-  createPlaceFormNameInput.value = '';
-  createPlaceFormImageInput.value = '';
+  placeFormNameInput.value = '';
+  placeFormImageInput.value = '';
 
-  createPlacePopup.classList.add('popup_opened');
+  placePopup.classList.add('popup_opened');
 });
 
 //добавление карточки
-createPlaceForm.addEventListener('submit', (evt) => {
+placeForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
 
   createPlaceCard(
-    createPlaceObject(createPlaceFormNameInput.value, createPlaceFormImageInput.value));
+    createPlaceObject(placeFormNameInput.value, placeFormImageInput.value));
 
-  closePopup(createPlacePopup);
+  closePopup(placePopup);
 });
 
 //создание объекта для описания места
