@@ -94,6 +94,14 @@ const imagePopup = page.querySelector('#popup-image');
 const imagePopupImage = imagePopup.querySelector('.popup__image');
 const imagePopupImageTitle = imagePopup.querySelector('.popup__image-title');
 
+function openImagePopup(place) {
+  imagePopupImage.src = place.link;
+  imagePopupImage.alt = place.name;
+  imagePopupImageTitle.textContent = place.name;
+
+  openPopup(imagePopup);
+}
+
 function createPlaceCard(place) {
   const placeCard = placeTemplate.querySelector('.place').cloneNode(true);
   const placeCardImage = placeCard.querySelector('.place__image');
@@ -107,13 +115,7 @@ function createPlaceCard(place) {
   placeCard.querySelector('.place__delete-button').addEventListener('click', (evt) =>
     placeCard.remove());
   //открытие карточки
-  placeCardImage.addEventListener('click', (evt) => {
-    imagePopupImage.src = place.link;
-    imagePopupImage.alt = place.name;
-    imagePopupImageTitle.textContent = place.name;
-
-    openPopup(imagePopup);
-  });
+  placeCardImage.addEventListener('click', () => openImagePopup(place));
 
   placesSection.prepend(placeCard);
 }
