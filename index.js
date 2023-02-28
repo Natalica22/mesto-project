@@ -73,8 +73,8 @@ placeButton.addEventListener('click', (evt) => {
 placeForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
 
-  createPlaceCard(
-    createPlaceObject(placeFormNameInput.value, placeFormImageInput.value));
+  addPlaceCard(createPlaceCard(
+    createPlaceObject(placeFormNameInput.value, placeFormImageInput.value)));
 
   closePopup(placePopup);
 });
@@ -117,6 +117,10 @@ function createPlaceCard(place) {
   //открытие карточки
   placeCardImage.addEventListener('click', () => openImagePopup(place));
 
+  return placeCard;
+}
+
+function addPlaceCard(placeCard) {
   placesSection.prepend(placeCard);
 }
 
@@ -134,4 +138,4 @@ const initialPlaces = [
 ];
 
 //создание карточек на основе мест по умолчанию
-initialPlaces.forEach(createPlaceCard);
+initialPlaces.map(createPlaceCard).forEach(addPlaceCard);
