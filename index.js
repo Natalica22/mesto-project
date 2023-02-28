@@ -1,6 +1,10 @@
 const page = document.querySelector('.page');
 const content = page.querySelector('.content');
 
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
+}
+
 //закрытие popup
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
@@ -31,7 +35,7 @@ profileEditButton.addEventListener('click', (evt) => {
   profileEditFormNameInput.value = profileName.textContent;
   profileEditFormAboutInput.value = profileAbout.textContent;
 
-  profileEditPopup.classList.add('popup_opened');
+  openPopup(profileEditPopup);
 });
 
 //сохранение введеных данных в форму редактирования профиля
@@ -62,7 +66,7 @@ placeButton.addEventListener('click', (evt) => {
   placeFormNameInput.value = '';
   placeFormImageInput.value = '';
 
-  placePopup.classList.add('popup_opened');
+  openPopup(placePopup);
 });
 
 //добавление карточки
@@ -108,7 +112,7 @@ function createPlaceCard(place) {
     imagePopupImage.alt = place.name;
     imagePopupImageTitle.textContent = place.name;
 
-    imagePopup.classList.add('popup_opened');
+    openPopup(imagePopup);
   });
 
   placesSection.prepend(placeCard);
