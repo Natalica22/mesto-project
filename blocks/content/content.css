@@ -4,6 +4,7 @@
   align-items: center;
   max-width: min(calc(100% - 38px), 880px);
   min-width: min(calc(100% - 38px), 880px);
+  flex-grow: 1;
 }
 
 
