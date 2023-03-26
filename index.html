@@ -52,11 +52,15 @@
         <form class="form" novalidate>
           <fieldset class="form__info">
             <div class="form__field">
-              <input type="text" id="profile-name-input" name="name" class="form__text" placeholder="Имя" required minlength="2" maxlength="40">
+              <input type="text" id="profile-name-input" name="name" class="form__text" placeholder="Имя"
+                required minlength="2" maxlength="40" pattern="^[a-zA-Zа-яА-ЯёЁ -]+$"
+                data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы">
               <span class="profile-name-input-error form__text-error"></span>
             </div>
             <div class="form__field">
-            <input type="text" id="profile-about-input" name="about" class="form__text" placeholder="О себе" required minlength="2" maxlength="200">
+            <input type="text" id="profile-about-input" name="about" class="form__text" placeholder="О себе"
+              required minlength="2" maxlength="200" pattern="^[a-zA-Zа-яА-ЯёЁ -]+$"
+              data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы">
             <span class="profile-about-input-error form__text-error"></span>
           </div>
           </fieldset>

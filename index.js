@@ -15,6 +15,7 @@ const profileEditButton = content.querySelector('.profile__edit-button');
 const profileEditForm = profileEditPopup.querySelector('.form');
 const profileEditFormNameInput = profileEditForm.querySelector('input[name=name]');
 const profileEditFormAboutInput = profileEditForm.querySelector('input[name=about]');
+const profileEditSubmitButton = profileEditForm.querySelector('.form__save-button');
 
 // поиск popup места
 const placePopup = page.querySelector('#place-popup');
@@ -81,7 +82,9 @@ function addPlaceCard(placeCard) {
 profileEditButton.addEventListener('click', (evt) => {
   profileEditFormNameInput.value = profileName.textContent;
   profileEditFormAboutInput.value = profileAbout.textContent;
-
+  hideInputError(profileEditForm, profileEditFormNameInput);
+  hideInputError(profileEditForm, profileEditFormAboutInput);
+  toggleButtonState([profileEditFormNameInput, profileEditFormAboutInput], profileEditSubmitButton);
   openPopup(profileEditPopup);
 });
 
@@ -145,6 +148,12 @@ const hideInputError = (formElement, inputElement) => {
 
 // проверка валидности
 const checkInputValidity = (formElement, inputElement) => {
+  if (inputElement.validity.patternMismatch) {
+    inputElement.setCustomValidity(inputElement.dataset.errorMessage);
+  } else {
+    inputElement.setCustomValidity('');
+  }
+
   if (!inputElement.validity.valid) {
     showInputError(formElement, inputElement, inputElement.validationMessage);
   } else {
@@ -152,12 +161,31 @@ const checkInputValidity = (formElement, inputElement) => {
   }
 };
 
-const addValidationOnInput = (formElement, inputElement) => {
-  inputElement.addEventListener('input', function () {
-    checkInputValidity(formElement, inputElement);
+const hasInvalidInput = (inputElements) => {
+  return inputElements.some((inputElement) => {
+    return !inputElement.validity.valid;
   });
 };
 
-addValidationOnInput(profileEditForm, profileEditFormNameInput);
-addValidationOnInput(profileEditForm, profileEditFormAboutInput);
+// включение и выключение кнопки
+const toggleButtonState = (inputElements, submitButton) => {
+  if (hasInvalidInput(inputElements)) {
+    submitButton.classList.add('form__save-button_inactive');
+  } else {
+    submitButton.classList.remove('form__save-button_inactive');
+  }
+}
 
+const addValidationOnInput = (formElement, inputElements, submitButton) => {
+  inputElements.forEach(inputElement => {
+    inputElement.addEventListener('input', function () {
+      checkInputValidity(formElement, inputElement);
+      toggleButtonState(inputElements, submitButton);
+    });
+  });
+};
+
+addValidationOnInput(
+  profileEditForm,
+  [profileEditFormNameInput, profileEditFormAboutInput],
+  profileEditSubmitButton);
