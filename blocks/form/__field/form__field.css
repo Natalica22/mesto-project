@@ -1,0 +1,13 @@
+.form__field {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+  max-width: 358px;
+}
+
+@media screen and (max-width: 767px) {
+  .form__field {
+    max-width: 238px;
+  }
+}
+

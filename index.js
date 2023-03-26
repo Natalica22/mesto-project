@@ -126,3 +126,38 @@ addCloseListener(imagePopup);
 
 //создание карточек на основе мест по умолчанию
 initialPlaces.map(createPlaceCard).forEach(addPlaceCard);
+
+// добавление класса с ошибкой
+const showInputError = (formElement, inputElement, errorMessage) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.add('form__text_type_error');
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add('form__text-error_active');
+};
+
+// удаление класса с ошибкой
+const hideInputError = (formElement, inputElement) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.remove('form__text_type_error');
+  errorElement.classList.remove('form__text-error_active');
+  errorElement.textContent = '';
+};
+
+// проверка валидности
+const checkInputValidity = (formElement, inputElement) => {
+  if (!inputElement.validity.valid) {
+    showInputError(formElement, inputElement, inputElement.validationMessage);
+  } else {
+    hideInputError(formElement, inputElement);
+  }
+};
+
+const addValidationOnInput = (formElement, inputElement) => {
+  inputElement.addEventListener('input', function () {
+    checkInputValidity(formElement, inputElement);
+  });
+};
+
+addValidationOnInput(profileEditForm, profileEditFormNameInput);
+addValidationOnInput(profileEditForm, profileEditFormAboutInput);
+

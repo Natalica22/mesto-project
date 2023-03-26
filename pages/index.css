@@ -32,7 +32,11 @@
 @import url("../blocks/popup/_opened/popup_opened.css");
 @import url("../blocks/form/form.css");
 @import url("../blocks/form/__info/form__info.css");
+@import url("../blocks/form/__field/form__field.css");
 @import url("../blocks/form/__text/form__text.css");
+@import url("../blocks/form/__text-error/form__text-error.css");
+@import url("../blocks/form/__text-error/_active/form__text-error_active.css");
+@import url("../blocks/form/__text/_type/form__text_type_error.css");
 @import url("../blocks/form/__save-button/form__save-button.css");
 @import url("../blocks/button-hover/button-hover.css");
 @import url("../blocks/popup/__container-image/popup__container-image.css");

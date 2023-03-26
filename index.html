@@ -49,10 +49,16 @@
       <div class="popup__container">
         <button type="reset" aria-label="close" class="popup__close button-hover"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <form class="form">
+        <form class="form" novalidate>
           <fieldset class="form__info">
-            <input type="text" name="name" class="form__text" placeholder="Имя">
-            <input type="text" name="about" class="form__text" placeholder="О себе">
+            <div class="form__field">
+              <input type="text" id="profile-name-input" name="name" class="form__text" placeholder="Имя" required minlength="2" maxlength="40">
+              <span class="profile-name-input-error form__text-error"></span>
+            </div>
+            <div class="form__field">
+            <input type="text" id="profile-about-input" name="about" class="form__text" placeholder="О себе" required minlength="2" maxlength="200">
+            <span class="profile-about-input-error form__text-error"></span>
+          </div>
           </fieldset>
           <button type="submit" class="form__save-button">Сохранить</button>
         </form>
