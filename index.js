@@ -82,9 +82,6 @@ function addPlaceCard(placeCard) {
 profileEditButton.addEventListener('click', (evt) => {
   profileEditFormNameInput.value = profileName.textContent;
   profileEditFormAboutInput.value = profileAbout.textContent;
-  hideInputError(profileEditForm, profileEditFormNameInput);
-  hideInputError(profileEditForm, profileEditFormAboutInput);
-  toggleButtonState([profileEditFormNameInput, profileEditFormAboutInput], profileEditSubmitButton);
   openPopup(profileEditPopup);
 });
 
@@ -131,23 +128,23 @@ addCloseListener(imagePopup);
 initialPlaces.map(createPlaceCard).forEach(addPlaceCard);
 
 // добавление класса с ошибкой
-const showInputError = (formElement, inputElement, errorMessage) => {
+const showInputError = (formElement, inputElement, errorMessage, config) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.add('form__text_type_error');
+  inputElement.classList.add(config.inputErrorClass);
   errorElement.textContent = errorMessage;
-  errorElement.classList.add('form__text-error_active');
+  errorElement.classList.add(config.errorClass);
 };
 
 // удаление класса с ошибкой
-const hideInputError = (formElement, inputElement) => {
+const hideInputError = (formElement, inputElement, config) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.remove('form__text_type_error');
-  errorElement.classList.remove('form__text-error_active');
+  inputElement.classList.remove(config.inputErrorClass);
+  errorElement.classList.remove(config.errorClass);
   errorElement.textContent = '';
 };
 
 // проверка валидности
-const checkInputValidity = (formElement, inputElement) => {
+const checkInputValidity = (formElement, inputElement, config) => {
   if (inputElement.validity.patternMismatch) {
     inputElement.setCustomValidity(inputElement.dataset.errorMessage);
   } else {
@@ -155,9 +152,9 @@ const checkInputValidity = (formElement, inputElement) => {
   }
 
   if (!inputElement.validity.valid) {
-    showInputError(formElement, inputElement, inputElement.validationMessage);
+    showInputError(formElement, inputElement, inputElement.validationMessage, config);
   } else {
-    hideInputError(formElement, inputElement);
+    hideInputError(formElement, inputElement, config);
   }
 };
 
@@ -168,24 +165,36 @@ const hasInvalidInput = (inputElements) => {
 };
 
 // включение и выключение кнопки
-const toggleButtonState = (inputElements, submitButton) => {
+const toggleButtonState = (inputElements, submitButton, config) => {
   if (hasInvalidInput(inputElements)) {
-    submitButton.classList.add('form__save-button_inactive');
+    submitButton.classList.add(config.inactiveButtonClass);
   } else {
-    submitButton.classList.remove('form__save-button_inactive');
+    submitButton.classList.remove(config.inactiveButtonClass);
   }
 }
 
-const addValidationOnInput = (formElement, inputElements, submitButton) => {
+const addValidationOnInput = (formElement, inputElements, submitButton, config) => {
   inputElements.forEach(inputElement => {
     inputElement.addEventListener('input', function () {
-      checkInputValidity(formElement, inputElement);
-      toggleButtonState(inputElements, submitButton);
+      checkInputValidity(formElement, inputElement, config);
+      toggleButtonState(inputElements, submitButton, config);
     });
   });
 };
 
-addValidationOnInput(
-  profileEditForm,
-  [profileEditFormNameInput, profileEditFormAboutInput],
-  profileEditSubmitButton);
+function enableValidation(config) {
+  document.querySelectorAll(config.formSelector).forEach(form => {
+    const inputs = form.querySelectorAll(config.inputSelector);
+    const submitButton = form.querySelector(config.submitButtonSelector);
+    addValidationOnInput(form, inputs, submitButton, config);
+  });
+}
+
+enableValidation({
+  formSelector: '.form',
+  inputSelector: '.form__text',
+  submitButtonSelector: '.form__save-button',
+  inactiveButtonClass: 'form__save-button_inactive',
+  inputErrorClass: 'form__text_type_error',
+  errorClass: 'form__text-error_active'
+});
