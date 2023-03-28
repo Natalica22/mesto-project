@@ -35,6 +35,15 @@ const imagePopup = page.querySelector('#popup-image');
 const imagePopupImage = imagePopup.querySelector('.popup__image');
 const imagePopupImageTitle = imagePopup.querySelector('.popup__image-title');
 
+const formValidationConfig = {
+  formSelector: '.form',
+  inputSelector: '.form__text',
+  submitButtonSelector: '.form__save-button',
+  inactiveButtonClass: 'form__save-button_inactive',
+  inputErrorClass: 'form__text_type_error',
+  errorClass: 'form__text-error_active'
+};
+
 function openPopup(popup) {
   popup.classList.add('popup_opened');
 }
@@ -80,6 +89,7 @@ function addPlaceCard(placeCard) {
 
 //открытие редактирования профиля
 profileEditButton.addEventListener('click', (evt) => {
+  resetForm(profileEditForm, formValidationConfig);
   profileEditFormNameInput.value = profileName.textContent;
   profileEditFormAboutInput.value = profileAbout.textContent;
   openPopup(profileEditPopup);
@@ -97,9 +107,7 @@ profileEditForm.addEventListener('submit', (evt) => {
 
 //открытие формы создания места
 placeButton.addEventListener('click', (evt) => {
-  //очистка полей формы
-  placeFormNameInput.value = '';
-  placeFormImageInput.value = '';
+  resetForm(placeForm, formValidationConfig);
 
   openPopup(placePopup);
 });
@@ -159,7 +167,7 @@ const checkInputValidity = (formElement, inputElement, config) => {
 };
 
 const hasInvalidInput = (inputElements) => {
-  return inputElements.some((inputElement) => {
+  return Array.from(inputElements).some((inputElement) => {
     return !inputElement.validity.valid;
   });
 };
@@ -190,11 +198,13 @@ function enableValidation(config) {
   });
 }
 
-enableValidation({
-  formSelector: '.form',
-  inputSelector: '.form__text',
-  submitButtonSelector: '.form__save-button',
-  inactiveButtonClass: 'form__save-button_inactive',
-  inputErrorClass: 'form__text_type_error',
-  errorClass: 'form__text-error_active'
-});
+function resetForm(form, config) {
+  form.querySelectorAll(config.inputSelector).forEach(input => {
+    hideInputError(form, input, config);
+  });
+  const submitButton = form.querySelector(config.submitButtonSelector);
+  submitButton.classList.remove(config.inactiveButtonClass);
+  form.reset();
+}
+
+enableValidation(formValidationConfig);
