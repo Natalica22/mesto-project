@@ -46,7 +46,18 @@ const formValidationConfig = {
 
 function openPopup(popup) {
   addCloseOnEsc(popup);
+  addCloseOnOverlay(popup);
   popup.classList.add('popup_opened');
+}
+
+function addCloseOnOverlay(popup) {
+  function closeOnOverlay(evt) {
+    if (evt.target.classList.contains('popup')) {
+      closePopup(popup);
+      popup.removeEventListener('click', closeOnOverlay);
+    }
+  }
+  popup.addEventListener('click', closeOnOverlay);
 }
 
 //закрытие popup
@@ -211,10 +222,11 @@ function resetForm(form, config) {
 enableValidation(formValidationConfig);
 
 function addCloseOnEsc(popup) {
-  document.addEventListener('keydown', evt => {
+  function closeOnEsc(evt) {
     if (evt.key === 'Escape') {
       closePopup(popup);
-      document.removeEventListener('keydown');
+      document.removeEventListener('keydown', closeOnEsc);
     }
-  });
+  }
+  document.addEventListener('keydown', closeOnEsc);
 }
