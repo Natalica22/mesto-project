@@ -45,6 +45,7 @@ const formValidationConfig = {
 };
 
 function openPopup(popup) {
+  addCloseOnEsc(popup);
   popup.classList.add('popup_opened');
 }
 
@@ -208,3 +209,12 @@ function resetForm(form, config) {
 }
 
 enableValidation(formValidationConfig);
+
+function addCloseOnEsc(popup) {
+  document.addEventListener('keydown', evt => {
+    if (evt.key === 'Escape') {
+      closePopup(popup);
+      document.removeEventListener('keydown');
+    }
+  });
+}
