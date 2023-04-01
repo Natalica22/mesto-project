@@ -110,6 +110,9 @@ profileEditButton.addEventListener('click', (evt) => {
 //сохранение введеных данных в форму редактирования профиля
 profileEditForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
+  if (!validateForm(profileEditForm, formValidationConfig)) {
+    return false;
+  }
 
   profileName.textContent = profileEditFormNameInput.value;
   profileAbout.textContent = profileEditFormAboutInput.value;
@@ -127,6 +130,9 @@ placeButton.addEventListener('click', (evt) => {
 //добавление карточки
 placeForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
+  if (!validateForm(placeForm, formValidationConfig)) {
+    return false;
+  }
 
   addPlaceCard(createPlaceCard(
     {
@@ -229,4 +235,14 @@ function addCloseOnEsc(popup) {
     }
   }
   document.addEventListener('keydown', closeOnEsc);
+}
+
+function validateForm(form, config) {
+  const inputs = form.querySelectorAll(config.inputSelector);
+  const submitButton = form.querySelector(config.submitButtonSelector);
+  inputs.forEach(input => {
+    checkInputValidity(form, input, config);
+  });
+  toggleButtonState(inputs, submitButton, config);
+  return !hasInvalidInput(inputs);
 }
