@@ -1,7 +1,7 @@
 .profile__name-row {
   display: flex;
   column-gap: 18px;
-  align-items: end;
+  align-items: flex-end;
 }
 
 @media screen and (max-width: 767px) {

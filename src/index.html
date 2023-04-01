@@ -4,20 +4,17 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./pages/index.css">
-  <script src="./places.js" defer></script>
-  <script src="./index.js" defer></script>
   <title>Mesto</title>
 </head>
 <body>
   <div class="page">
     <header class="header">
-      <img src="./images/header-logo.svg" alt="логотип Mesto" class="header__logo">
+      <img src="<%= require('./images/header-logo.svg') %>" alt="логотип Mesto" class="header__logo">
     </header>
     <main class="content">
       <section class="profile">
         <div class="profile__content">
-          <img src="./images/avatar.jpg" alt="аватар профиля" class="profile__avatar">
+          <img src="<%= require('./images/avatar.jpg') %>" alt="аватар профиля" class="profile__avatar">
           <div class="profile__info">
             <div class="profile__name-row">
               <h1 class="profile__name">Жак-Ив Кусто</h1>

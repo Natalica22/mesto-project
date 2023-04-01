@@ -1,3 +1,6 @@
+import './pages/index.css';
+import {initialPlaces} from './places.js';
+
 const page = document.querySelector('.page');
 const content = page.querySelector('.content');
 
