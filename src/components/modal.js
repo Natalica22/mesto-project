@@ -6,23 +6,24 @@ function closeOnClick(evt, popup) {
   }
 }
 
-function addCloseOnEsc(popup) {
-  function closeOnEsc(evt) {
-    if (evt.key === 'Escape') {
-      closePopup(popup);
-      document.removeEventListener('keydown', closeOnEsc);
-    }
+function closeOnEsc(evt) {
+  if (evt.key === 'Escape') {
+    closePopup(document.querySelector('.popup_opened'));
   }
+}
+
+function addCloseOnEsc() {
   document.addEventListener('keydown', closeOnEsc);
 }
 
 //закрытие popup
 export function closePopup(popup) {
+  document.removeEventListener('keydown', closeOnEsc);
   popup.classList.remove('popup_opened');
 }
 
 export function openPopup(popup) {
-  addCloseOnEsc(popup);
+  addCloseOnEsc();
   popup.classList.add('popup_opened');
 }
 
