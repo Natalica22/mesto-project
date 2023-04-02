@@ -39,8 +39,10 @@ function hasInvalidInput(inputElements) {
 function toggleButtonState(inputElements, submitButton, config) {
   if (hasInvalidInput(inputElements)) {
     submitButton.classList.add(config.inactiveButtonClass);
+    submitButton.disabled = true;
   } else {
     submitButton.classList.remove(config.inactiveButtonClass);
+    submitButton.disabled = false;
   }
 }
 
@@ -78,4 +80,10 @@ export function validateForm(form, config) {
   });
   toggleButtonState(inputs, submitButton, config);
   return !hasInvalidInput(inputs);
+}
+
+export function disableSubmitButton(form, config) {
+  const submitButton = form.querySelector(config.submitButtonSelector);
+  submitButton.classList.add(config.inactiveButtonClass);
+  submitButton.disabled = true;
 }

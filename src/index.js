@@ -2,7 +2,7 @@ import './pages/index.css';
 import { initialPlaces } from './places';
 import { closePopup, openPopup } from './components/modal';
 import { createPlaceCard } from './components/card';
-import { enableValidation, resetForm, validateForm } from './components/validate';
+import { enableValidation, resetForm, validateForm, disableSubmitButton } from './components/validate';
 
 const page = document.querySelector('.page');
 const content = page.querySelector('.content');
@@ -72,9 +72,6 @@ profileEditButton.addEventListener('click', (evt) => {
 //сохранение введеных данных в форму редактирования профиля
 profileEditForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  if (!validateForm(profileEditForm, formValidationConfig)) {
-    return false;
-  }
 
   profileName.textContent = profileEditFormNameInput.value;
   profileAbout.textContent = profileEditFormAboutInput.value;
@@ -85,16 +82,13 @@ profileEditForm.addEventListener('submit', (evt) => {
 //открытие формы создания места
 placeButton.addEventListener('click', (evt) => {
   resetForm(placeForm, formValidationConfig);
-
+  disableSubmitButton(placeForm, formValidationConfig);
   openPopup(placePopup);
 });
 
 //добавление карточки
 placeForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  if (!validateForm(placeForm, formValidationConfig)) {
-    return false;
-  }
 
   addPlaceCard(createPlaceCard(
     {
