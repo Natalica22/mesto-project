@@ -1,13 +1,9 @@
 const popups = document.querySelectorAll('.popup');
 
-function addCloseOnOverlay(popup) {
-  function closeOnOverlay(evt) {
-    if (evt.target.classList.contains('popup')) {
-      closePopup(popup);
-      popup.removeEventListener('click', closeOnOverlay);
-    }
+function closeOnClick(evt, popup) {
+  if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
+    closePopup(popup);
   }
-  popup.addEventListener('click', closeOnOverlay);
 }
 
 function addCloseOnEsc(popup) {
@@ -27,11 +23,9 @@ export function closePopup(popup) {
 
 export function openPopup(popup) {
   addCloseOnEsc(popup);
-  addCloseOnOverlay(popup);
   popup.classList.add('popup_opened');
 }
 
 popups.forEach(popup => {
-  popup.querySelector('.popup__close').addEventListener('click', (evt) =>
-    closePopup(popup));
+  popup.addEventListener('click', evt => closeOnClick(evt, popup));
 });
