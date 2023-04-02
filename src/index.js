@@ -1,6 +1,7 @@
 import './pages/index.css';
 import {initialPlaces} from './places';
 import { closePopup, openPopup } from './components/modal';
+import { createPlaceCard } from './components/card';
 
 const page = document.querySelector('.page');
 const content = page.querySelector('.content');
@@ -55,24 +56,6 @@ function openImagePopup(place) {
   openPopup(imagePopup);
 }
 
-function createPlaceCard(place) {
-  const placeCard = placeTemplate.querySelector('.place').cloneNode(true);
-  const placeCardImage = placeCard.querySelector('.place__image');
-  placeCardImage.src = place.link;
-  placeCardImage.alt = place.name;
-  placeCard.querySelector('.place__title').textContent = place.name;
-  //лайк карточки
-  placeCard.querySelector('.place__like-button').addEventListener('click', (evt) =>
-    evt.target.classList.toggle('place__like-button_active'));
-  //удаление карточки
-  placeCard.querySelector('.place__delete-button').addEventListener('click', (evt) =>
-    placeCard.remove());
-  //открытие карточки
-  placeCardImage.addEventListener('click', () => openImagePopup(place));
-
-  return placeCard;
-}
-
 function addPlaceCard(placeCard) {
   placesSection.prepend(placeCard);
 }
@@ -116,13 +99,14 @@ placeForm.addEventListener('submit', (evt) => {
     {
       name: placeFormNameInput.value,
       link: placeFormImageInput.value
-    }));
+    }, placeTemplate, openImagePopup));
 
   closePopup(placePopup);
 });
 
 //создание карточек на основе мест по умолчанию
-initialPlaces.map(createPlaceCard).forEach(addPlaceCard);
+initialPlaces.map(place => createPlaceCard(place, placeTemplate, openImagePopup))
+  .forEach(addPlaceCard);
 
 // добавление класса с ошибкой
 const showInputError = (formElement, inputElement, errorMessage, config) => {
