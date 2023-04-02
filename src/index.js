@@ -1,13 +1,14 @@
 import './pages/index.css';
-import { initialPlaces } from './places';
 import { closePopup, openPopup } from './components/modal';
 import { createPlaceCard } from './components/card';
 import { enableValidation, resetForm, validateForm, disableSubmitButton } from './components/validate';
+import { getUser, getCards } from './components/api';
 
 const page = document.querySelector('.page');
 const content = page.querySelector('.content');
 
 //поиск текущих значений профиля
+const profileAvatar = content.querySelector('.profile__avatar');
 const profileName = content.querySelector('.profile__name');
 const profileAbout = content.querySelector('.profile__about');
 
@@ -99,8 +100,18 @@ placeForm.addEventListener('submit', (evt) => {
   closePopup(placePopup);
 });
 
-//создание карточек на основе мест по умолчанию
-initialPlaces.map(place => createPlaceCard(place, placeTemplate, openImagePopup))
-  .forEach(addPlaceCard);
-
 enableValidation(formValidationConfig);
+
+getUser()
+  .then(user => {
+    profileName.textContent = user.name;
+    profileAbout.textContent = user.about;
+    profileAvatar.src = user.avatar;
+  });
+
+//создание карточек на основе мест по умолчанию
+getCards()
+  .then(cards => {
+    cards.map(card => createPlaceCard(card, placeTemplate, openImagePopup))
+      .forEach(addPlaceCard);
+  });
