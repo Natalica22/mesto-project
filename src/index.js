@@ -1,5 +1,6 @@
 import './pages/index.css';
-import {initialPlaces} from './places.js';
+import {initialPlaces} from './places';
+import { closePopup, openPopup } from './components/modal';
 
 const page = document.querySelector('.page');
 const content = page.querySelector('.content');
@@ -18,7 +19,6 @@ const profileEditButton = content.querySelector('.profile__edit-button');
 const profileEditForm = profileEditPopup.querySelector('.form');
 const profileEditFormNameInput = profileEditForm.querySelector('input[name=name]');
 const profileEditFormAboutInput = profileEditForm.querySelector('input[name=about]');
-const profileEditSubmitButton = profileEditForm.querySelector('.form__save-button');
 
 // поиск popup места
 const placePopup = page.querySelector('#place-popup');
@@ -46,31 +46,6 @@ const formValidationConfig = {
   inputErrorClass: 'form__text_type_error',
   errorClass: 'form__text-error_active'
 };
-
-function openPopup(popup) {
-  addCloseOnEsc(popup);
-  addCloseOnOverlay(popup);
-  popup.classList.add('popup_opened');
-}
-
-function addCloseOnOverlay(popup) {
-  function closeOnOverlay(evt) {
-    if (evt.target.classList.contains('popup')) {
-      closePopup(popup);
-      popup.removeEventListener('click', closeOnOverlay);
-    }
-  }
-  popup.addEventListener('click', closeOnOverlay);
-}
-
-//закрытие popup
-function closePopup(popup) {
-  popup.classList.remove('popup_opened');
-}
-
-function addCloseListener(popup) {
-  popup.querySelector('.popup__close').addEventListener('click', (evt) => closePopup(popup));
-}
 
 function openImagePopup(place) {
   imagePopupImage.src = place.link;
@@ -145,13 +120,6 @@ placeForm.addEventListener('submit', (evt) => {
 
   closePopup(placePopup);
 });
-
-addCloseListener(profileEditPopup);
-
-addCloseListener(placePopup);
-
-//закрытие popup места
-addCloseListener(imagePopup);
 
 //создание карточек на основе мест по умолчанию
 initialPlaces.map(createPlaceCard).forEach(addPlaceCard);
@@ -229,16 +197,6 @@ function resetForm(form, config) {
 }
 
 enableValidation(formValidationConfig);
-
-function addCloseOnEsc(popup) {
-  function closeOnEsc(evt) {
-    if (evt.key === 'Escape') {
-      closePopup(popup);
-      document.removeEventListener('keydown', closeOnEsc);
-    }
-  }
-  document.addEventListener('keydown', closeOnEsc);
-}
 
 function validateForm(form, config) {
   const inputs = form.querySelectorAll(config.inputSelector);
