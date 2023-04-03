@@ -1,8 +1,8 @@
 import './pages/index.css';
 import { closePopup, openPopup } from './components/modal';
 import { createPlaceCard } from './components/card';
-import { enableValidation, resetForm, validateForm, disableSubmitButton } from './components/validate';
-import { getUser, getCards, editUser } from './components/api';
+import { enableValidation, resetForm, disableSubmitButton } from './components/validate';
+import { getUser, getCards, editUser, createCard } from './components/api';
 
 const page = document.querySelector('.page');
 const content = page.querySelector('.content');
@@ -58,8 +58,12 @@ function openImagePopup(place) {
   openPopup(imagePopup);
 }
 
-function addPlaceCard(placeCard) {
+function prependPlaceCard(placeCard) {
   placesSection.prepend(placeCard);
+}
+
+function appendPlaceCard(placeCard) {
+  placesSection.append(placeCard);
 }
 
 //открытие редактирования профиля
@@ -93,13 +97,11 @@ placeButton.addEventListener('click', (evt) => {
 placeForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
 
-  addPlaceCard(createPlaceCard(
-    {
-      name: placeFormNameInput.value,
-      link: placeFormImageInput.value
-    }, placeTemplate, openImagePopup));
-
-  closePopup(placePopup);
+  createCard(placeFormNameInput.value, placeFormImageInput.value)
+    .then(card => {
+      prependPlaceCard(createPlaceCard(card, placeTemplate, openImagePopup));
+      closePopup(placePopup);
+    });
 });
 
 enableValidation(formValidationConfig);
@@ -114,6 +116,5 @@ getUser()
 //создание карточек на основе мест по умолчанию
 getCards()
   .then(cards => {
-    cards.map(card => createPlaceCard(card, placeTemplate, openImagePopup))
-      .forEach(addPlaceCard);
+    cards.forEach(card => appendPlaceCard(createPlaceCard(card, placeTemplate, openImagePopup)));
   });

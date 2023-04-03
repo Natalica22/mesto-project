@@ -10,9 +10,9 @@ function getApi(resource) {
     .then(res => res.json());
 }
 
-function patchApi(resource, obj) {
+function callApi(resource, method, obj) {
   return fetch(apiUrl + resource, {
-    method: 'PATCH',
+    method: method,
     headers: {
       authorization: authorization,
       'Content-Type': 'application/json'
@@ -22,14 +22,26 @@ function patchApi(resource, obj) {
     .then(res => res.json());
 }
 
+function patchApi(resource, obj) {
+  return callApi(resource, 'PATCH', obj);
+}
+
+function postApi(resource, obj) {
+  return callApi(resource, 'POST', obj);
+}
+
 export function getUser() {
   return getApi('users/me');
+}
+
+export function editUser(name, about) {
+  return patchApi('users/me', { 'name': name, 'about': about });
 }
 
 export function getCards() {
   return getApi('cards');
 }
 
-export function editUser(name, about) {
-  return patchApi('users/me', { 'name': name, 'about': about });
+export function createCard(name, link) {
+  return postApi('cards', { 'name': name, 'link': link });
 }
