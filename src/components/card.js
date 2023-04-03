@@ -1,8 +1,10 @@
 export function createPlaceCard(place, placeTemplate, openImagePopup) {
   const placeCard = placeTemplate.querySelector('.place').cloneNode(true);
   const placeCardImage = placeCard.querySelector('.place__image');
+  const placeLikeCount = placeCard.querySelector('.place__like-count');
   placeCardImage.src = place.link;
   placeCardImage.alt = place.name;
+  placeLikeCount.textContent = place.likes.length;
   placeCard.querySelector('.place__title').textContent = place.name;
   //лайк карточки
   placeCard.querySelector('.place__like-button').addEventListener('click', (evt) =>
