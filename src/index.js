@@ -2,7 +2,7 @@ import './pages/index.css';
 import { closePopup, openPopup } from './components/modal';
 import { createPlaceCard } from './components/card';
 import { enableValidation, resetForm, validateForm, disableSubmitButton } from './components/validate';
-import { getUser, getCards } from './components/api';
+import { getUser, getCards, editUser } from './components/api';
 
 const page = document.querySelector('.page');
 const content = page.querySelector('.content');
@@ -74,10 +74,12 @@ profileEditButton.addEventListener('click', (evt) => {
 profileEditForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
 
-  profileName.textContent = profileEditFormNameInput.value;
-  profileAbout.textContent = profileEditFormAboutInput.value;
-
-  closePopup(profileEditPopup);
+  editUser(profileEditFormNameInput.value, profileEditFormAboutInput.value)
+    .then(user => {
+      profileName.textContent = user.name;
+      profileAbout.textContent = user.about;
+      closePopup(profileEditPopup);
+    });
 });
 
 //открытие формы создания места
