@@ -19,6 +19,8 @@
 @import url("../blocks/place/__image/place__image.css");
 @import url("../blocks/place/__content/place__content.css");
 @import url("../blocks/place/__title/place__title.css");
+@import url("../blocks/place/__like-area/place__like-area.css");
+@import url("../blocks/place/__like-count/place__like-count.css");
 @import url("../blocks/place/__like-button/place__like-button.css");
 @import url("../blocks/place/__like-button/_active/place__like-button_active.css");
 @import url("../blocks/place/__delete-button/place__delete-button.css");

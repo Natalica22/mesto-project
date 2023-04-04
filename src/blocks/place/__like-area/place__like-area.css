@@ -1,0 +1,5 @@
+.place__like-area {
+  display: flex;
+  flex-direction: column;
+  row-gap: 3px;
+}
