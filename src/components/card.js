@@ -1,3 +1,5 @@
+import { deleteCard } from "./api";
+
 export function createPlaceCard(place, placeTemplate, openImagePopup) {
   const placeCard = placeTemplate.querySelector('.place').cloneNode(true);
   const placeCardImage = placeCard.querySelector('.place__image');
@@ -10,8 +12,10 @@ export function createPlaceCard(place, placeTemplate, openImagePopup) {
   placeCard.querySelector('.place__like-button').addEventListener('click', (evt) =>
     evt.target.classList.toggle('place__like-button_active'));
   //удаление карточки
-  placeCard.querySelector('.place__delete-button').addEventListener('click', (evt) =>
-    placeCard.remove());
+  placeCard.querySelector('.place__delete-button').addEventListener('click', (evt) => {
+    deleteCard(place._id)
+      .then(() => placeCard.remove());
+  });
   //открытие карточки
   placeCardImage.addEventListener('click', () => openImagePopup(place));
 

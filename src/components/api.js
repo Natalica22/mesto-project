@@ -22,6 +22,15 @@ function callApi(resource, method, obj) {
     .then(res => res.json());
 }
 
+function deleteApi(resource) {
+  return fetch(apiUrl + resource, {
+    method: 'DELETE',
+    headers: {
+      authorization: authorization
+    }
+  });
+}
+
 function patchApi(resource, obj) {
   return callApi(resource, 'PATCH', obj);
 }
@@ -44,4 +53,8 @@ export function getCards() {
 
 export function createCard(name, link) {
   return postApi('cards', { 'name': name, 'link': link });
+}
+
+export function deleteCard(cardId) {
+  return deleteApi('cards/' + cardId);
 }
