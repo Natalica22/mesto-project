@@ -93,16 +93,7 @@ placeButton.addEventListener('click', (evt) => {
   openPopup(placePopup);
 });
 
-//добавление карточки
-placeForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
 
-  createCard(placeFormNameInput.value, placeFormImageInput.value)
-    .then(card => {
-      prependPlaceCard(createPlaceCard(card, placeTemplate, openImagePopup));
-      closePopup(placePopup);
-    });
-});
 
 enableValidation(formValidationConfig);
 
@@ -111,10 +102,20 @@ getUser()
     profileName.textContent = user.name;
     profileAbout.textContent = user.about;
     profileAvatar.src = user.avatar;
-  });
 
-//создание карточек на основе мест по умолчанию
-getCards()
-  .then(cards => {
-    cards.forEach(card => appendPlaceCard(createPlaceCard(card, placeTemplate, openImagePopup)));
+    getCards()
+      .then(cards => {
+        cards.forEach(card => appendPlaceCard(createPlaceCard(card, placeTemplate, openImagePopup, user._id)));
+      });
+
+    //добавление карточки
+    placeForm.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+
+      createCard(placeFormNameInput.value, placeFormImageInput.value)
+        .then(card => {
+          prependPlaceCard(createPlaceCard(card, placeTemplate, openImagePopup, user._id));
+          closePopup(placePopup);
+        });
+    });
   });
