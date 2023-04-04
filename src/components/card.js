@@ -1,6 +1,7 @@
 import { deleteCard } from "./api";
+import { closePopup, openPopup } from "./modal";
 
-export function createPlaceCard(place, placeTemplate, openImagePopup, userId) {
+export function createPlaceCard(place, placeTemplate, openImagePopup, userId, confirmPopup) {
   const placeCard = placeTemplate.querySelector('.place').cloneNode(true);
   const placeCardImage = placeCard.querySelector('.place__image');
   const placeLikeCount = placeCard.querySelector('.place__like-count');
@@ -13,9 +14,15 @@ export function createPlaceCard(place, placeTemplate, openImagePopup, userId) {
   placeCard.querySelector('.place__like-button').addEventListener('click', (evt) =>
     evt.target.classList.toggle('place__like-button_active'));
   if (place.owner._id === userId) {
-    deleteButton.addEventListener('click', (evt) => {
-      deleteCard(place._id)
-        .then(() => placeCard.remove());
+    deleteButton.addEventListener('click', () => {
+      confirmPopup.querySelector('.form').addEventListener('submit', (evt) => {
+        evt.preventDefault();
+
+        deleteCard(place._id)
+          .then(() => placeCard.remove())
+          .then(() => closePopup(confirmPopup));
+      });
+      openPopup(confirmPopup);
     });
   } else {
     deleteButton.remove();

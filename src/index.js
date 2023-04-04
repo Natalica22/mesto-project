@@ -41,6 +41,8 @@ const imagePopup = page.querySelector('#popup-image');
 const imagePopupImage = imagePopup.querySelector('.popup__image');
 const imagePopupImageTitle = imagePopup.querySelector('.popup__image-title');
 
+const confirmPopup = page.querySelector('#confirm-popup');
+
 const formValidationConfig = {
   formSelector: '.form',
   inputSelector: '.form__text',
@@ -93,8 +95,6 @@ placeButton.addEventListener('click', (evt) => {
   openPopup(placePopup);
 });
 
-
-
 enableValidation(formValidationConfig);
 
 getUser()
@@ -105,7 +105,7 @@ getUser()
 
     getCards()
       .then(cards => {
-        cards.forEach(card => appendPlaceCard(createPlaceCard(card, placeTemplate, openImagePopup, user._id)));
+        cards.forEach(card => appendPlaceCard(createPlaceCard(card, placeTemplate, openImagePopup, user._id, confirmPopup)));
       });
 
     //добавление карточки
@@ -114,7 +114,7 @@ getUser()
 
       createCard(placeFormNameInput.value, placeFormImageInput.value)
         .then(card => {
-          prependPlaceCard(createPlaceCard(card, placeTemplate, openImagePopup, user._id));
+          prependPlaceCard(createPlaceCard(card, placeTemplate, openImagePopup, user._id, confirmPopup));
           closePopup(placePopup);
         });
     });
