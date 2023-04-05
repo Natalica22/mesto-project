@@ -12,6 +12,10 @@ const profileAvatar = content.querySelector('.profile__avatar');
 const profileName = content.querySelector('.profile__name');
 const profileAbout = content.querySelector('.profile__about');
 
+const avatarEditPopup = page.querySelector('#avatar-popup');
+const avatarEditForm = avatarEditPopup.querySelector('.form');
+const avatarEditFormUrlInput = avatarEditForm.querySelector('input[name=avatarUrl]');
+
 // поиск popup для профиля
 const profileEditPopup = page.querySelector('#profile-popup');
 
@@ -68,8 +72,13 @@ function appendPlaceCard(placeCard) {
   placesSection.append(placeCard);
 }
 
+profileAvatar.addEventListener('click', () => {
+  resetForm(avatarEditForm, formValidationConfig);
+  openPopup(avatarEditPopup);
+});
+
 //открытие редактирования профиля
-profileEditButton.addEventListener('click', (evt) => {
+profileEditButton.addEventListener('click', () => {
   resetForm(profileEditForm, formValidationConfig);
   profileEditFormNameInput.value = profileName.textContent;
   profileEditFormAboutInput.value = profileAbout.textContent;
