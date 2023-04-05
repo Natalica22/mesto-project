@@ -31,6 +31,15 @@ function deleteApi(resource) {
   });
 }
 
+function putApi(resource) {
+  return fetch(apiUrl + resource, {
+    method: 'PUT',
+    headers: {
+      authorization: authorization
+    }
+  });
+}
+
 function patchApi(resource, obj) {
   return callApi(resource, 'PATCH', obj);
 }
@@ -57,4 +66,14 @@ export function createCard(name, link) {
 
 export function deleteCard(cardId) {
   return deleteApi('cards/' + cardId);
+}
+
+export function likeCard(cardId) {
+  return putApi('cards/likes/' + cardId)
+    .then(res => res.json());
+}
+
+export function deleteLikeCard(cardId) {
+  return deleteApi('cards/likes/' + cardId)
+    .then(res => res.json());
 }
