@@ -15,6 +15,7 @@ const profileAbout = content.querySelector('.profile__about');
 const avatarEditPopup = page.querySelector('#avatar-popup');
 const avatarEditForm = avatarEditPopup.querySelector('.form');
 const avatarEditFormUrlInput = avatarEditForm.querySelector('input[name=avatarUrl]');
+const avatarEditFormSubmitButton = avatarEditForm.querySelector('.form__save-button');
 
 // поиск popup для профиля
 const profileEditPopup = page.querySelector('#profile-popup');
@@ -38,6 +39,7 @@ const placeButton = content.querySelector('.profile__add-place-button');
 const placeForm = placePopup.querySelector('.form');
 const placeFormNameInput = placeForm.querySelector('input[name=name]');
 const placeFormImageInput = placeForm.querySelector('input[name=imageUrl]');
+const placeFormSubmitButton = placeForm.querySelector('.form__save-button');
 
 //поиск шаблона карточки места
 const placeTemplate = content.querySelector('#place').content;
@@ -79,7 +81,12 @@ function appendPlaceCard(placeCard) {
   placesSection.append(placeCard);
 }
 
+function resetAvatarEditFormSubmitButton() {
+  avatarEditFormSubmitButton.textContent = 'Сохранить';
+}
+
 profileAvatar.addEventListener('click', () => {
+  resetAvatarEditFormSubmitButton();
   resetForm(avatarEditForm, formValidationConfig);
   openPopup(avatarEditPopup);
 });
@@ -87,11 +94,13 @@ profileAvatar.addEventListener('click', () => {
 avatarEditForm.addEventListener('submit', evt => {
   evt.preventDefault();
 
+  avatarEditFormSubmitButton.textContent = 'Сохранение...';
   editAvatar(avatarEditFormUrlInput.value)
     .then(user => {
       updateProfile(user);
       closePopup(avatarEditPopup);
-    });
+    })
+    .catch(() => resetAvatarEditFormSubmitButton());
 });
 
 function resetProfileEditFormSubmitButton() {
@@ -117,13 +126,16 @@ profileEditForm.addEventListener('submit', evt => {
       updateProfile(user);
       closePopup(profileEditPopup);
     })
-    .catch(() => {
-      resetProfileEditFormSubmitButton();
-    });
+    .catch(() => resetProfileEditFormSubmitButton());
 });
 
+function resetPlaceFormSubmitButton() {
+  placeFormSubmitButton.textContent = 'Создать';
+}
+
 //открытие формы создания места
-placeButton.addEventListener('click', (evt) => {
+placeButton.addEventListener('click', evt => {
+  resetPlaceFormSubmitButton();
   resetForm(placeForm, formValidationConfig);
   disableSubmitButton(placeForm, formValidationConfig);
   openPopup(placePopup);
@@ -144,11 +156,13 @@ getUser()
     placeForm.addEventListener('submit', (evt) => {
       evt.preventDefault();
 
+      placeFormSubmitButton.textContent = 'Сохранение...';
       createCard(placeFormNameInput.value, placeFormImageInput.value)
         .then(card => {
           prependPlaceCard(createPlaceCard(card, placeTemplate, openImagePopup, user._id, confirmPopup));
           closePopup(placePopup);
-        });
+        })
+        .catch(() => resetPlaceFormSubmitButton());
     });
   });
 
