@@ -2,7 +2,7 @@ import './pages/index.css';
 import { closePopup, openPopup } from './components/modal';
 import { createPlaceCard } from './components/card';
 import { enableValidation, resetForm, disableSubmitButton } from './components/validate';
-import { getUser, getCards, editUser, createCard, editAvatar } from './components/api';
+import { getUser, getInitialCards, editUser, createCard, editAvatar } from './components/api';
 
 const page = document.querySelector('.page');
 const content = page.querySelector('.content');
@@ -147,7 +147,7 @@ getUser()
   .then(user => {
     updateProfile(user);
 
-    getCards()
+    getInitialCards()
       .then(cards => {
         cards.forEach(card => appendPlaceCard(createPlaceCard(card, placeTemplate, openImagePopup, user._id, confirmPopup)));
       });
