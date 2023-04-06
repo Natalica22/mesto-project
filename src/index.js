@@ -26,6 +26,7 @@ const profileEditButton = content.querySelector('.profile__edit-button');
 const profileEditForm = profileEditPopup.querySelector('.form');
 const profileEditFormNameInput = profileEditForm.querySelector('input[name=name]');
 const profileEditFormAboutInput = profileEditForm.querySelector('input[name=about]');
+const profileEditFormSubmitButton = profileEditForm.querySelector('.form__save-button');
 
 // поиск popup места
 const placePopup = page.querySelector('#place-popup');
@@ -93,8 +94,13 @@ avatarEditForm.addEventListener('submit', evt => {
     });
 });
 
+function resetProfileEditFormSubmitButton() {
+  profileEditFormSubmitButton.textContent = 'Сохранить';
+}
+
 //открытие редактирования профиля
 profileEditButton.addEventListener('click', () => {
+  resetProfileEditFormSubmitButton();
   resetForm(profileEditForm, formValidationConfig);
   profileEditFormNameInput.value = profileName.textContent;
   profileEditFormAboutInput.value = profileAbout.textContent;
@@ -105,10 +111,14 @@ profileEditButton.addEventListener('click', () => {
 profileEditForm.addEventListener('submit', evt => {
   evt.preventDefault();
 
+  profileEditFormSubmitButton.textContent = 'Сохранение...';
   editUser(profileEditFormNameInput.value, profileEditFormAboutInput.value)
     .then(user => {
       updateProfile(user);
       closePopup(profileEditPopup);
+    })
+    .catch(() => {
+      resetProfileEditFormSubmitButton();
     });
 });
 
@@ -141,3 +151,5 @@ getUser()
         });
     });
   });
+
+
