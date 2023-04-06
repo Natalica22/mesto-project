@@ -77,3 +77,7 @@ export function deleteLikeCard(cardId) {
   return deleteApi('cards/likes/' + cardId)
     .then(res => res.json());
 }
+
+export function editAvatar(avatarUrl) {
+  return patchApi('users/me/avatar', { 'avatar': avatarUrl });
+}

@@ -2,7 +2,7 @@ import './pages/index.css';
 import { closePopup, openPopup } from './components/modal';
 import { createPlaceCard } from './components/card';
 import { enableValidation, resetForm, disableSubmitButton } from './components/validate';
-import { getUser, getCards, editUser, createCard } from './components/api';
+import { getUser, getCards, editUser, createCard, editAvatar } from './components/api';
 
 const page = document.querySelector('.page');
 const content = page.querySelector('.content');
@@ -56,6 +56,12 @@ const formValidationConfig = {
   errorClass: 'form__text-error_active'
 };
 
+function updateProfile(user) {
+  profileName.textContent = user.name;
+  profileAbout.textContent = user.about;
+  profileAvatar.src = user.avatar;
+}
+
 function openImagePopup(place) {
   imagePopupImage.src = place.link;
   imagePopupImage.alt = place.name;
@@ -77,6 +83,16 @@ profileAvatar.addEventListener('click', () => {
   openPopup(avatarEditPopup);
 });
 
+avatarEditForm.addEventListener('submit', evt => {
+  evt.preventDefault();
+
+  editAvatar(avatarEditFormUrlInput.value)
+    .then(user => {
+      updateProfile(user);
+      closePopup(avatarEditPopup);
+    });
+});
+
 //открытие редактирования профиля
 profileEditButton.addEventListener('click', () => {
   resetForm(profileEditForm, formValidationConfig);
@@ -86,13 +102,12 @@ profileEditButton.addEventListener('click', () => {
 });
 
 //сохранение введеных данных в форму редактирования профиля
-profileEditForm.addEventListener('submit', (evt) => {
+profileEditForm.addEventListener('submit', evt => {
   evt.preventDefault();
 
   editUser(profileEditFormNameInput.value, profileEditFormAboutInput.value)
     .then(user => {
-      profileName.textContent = user.name;
-      profileAbout.textContent = user.about;
+      updateProfile(user);
       closePopup(profileEditPopup);
     });
 });
@@ -108,9 +123,7 @@ enableValidation(formValidationConfig);
 
 getUser()
   .then(user => {
-    profileName.textContent = user.name;
-    profileAbout.textContent = user.about;
-    profileAvatar.src = user.avatar;
+    updateProfile(user);
 
     getCards()
       .then(cards => {
