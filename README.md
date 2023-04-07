@@ -22,3 +22,6 @@ ___
 * **Webpack**
   + сборка проекта
 ___
+
+
+[Ссылка на GitHub Pages](https://natalica22.github.io/mesto-project/)
