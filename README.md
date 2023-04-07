@@ -17,7 +17,8 @@ ___
   + Используется форма.
 * **JS**
   + редактирование DOM;
-  + EventListener.
+  + EventListener;
+  + Promise для работы с API.
 * **Webpack**
   + сборка проекта
 ___
