@@ -1,5 +1,4 @@
 import { deleteCard, deleteLikeCard, handleApiError, likeCard } from "./api";
-import { closePopup, openPopup } from "./modal";
 
 function setLikes(place, likeButton, likeCount, userId) {
   likeCount.textContent = place.likes.length;
@@ -11,7 +10,7 @@ function setLikes(place, likeButton, likeCount, userId) {
   }
 }
 
-export function createPlaceCard(place, placeTemplate, openImagePopup, userId, confirmPopup) {
+export function createPlaceCard(place, placeTemplate, openImagePopup, userId) {
   const placeCard = placeTemplate.querySelector('.place').cloneNode(true);
   const placeCardImage = placeCard.querySelector('.place__image');
   const placeLikeCount = placeCard.querySelector('.place__like-count');
@@ -33,15 +32,9 @@ export function createPlaceCard(place, placeTemplate, openImagePopup, userId, co
 
   if (place.owner._id === userId) {
     deleteButton.addEventListener('click', () => {
-      confirmPopup.querySelector('.form').addEventListener('submit', (evt) => {
-        evt.preventDefault();
-
-        deleteCard(place._id)
-          .then(() => placeCard.remove())
-          .then(() => closePopup(confirmPopup))
-          .catch(handleApiError);
-      });
-      openPopup(confirmPopup);
+      deleteCard(place._id)
+        .then(() => placeCard.remove())
+        .catch(handleApiError);
     });
   } else {
     deleteButton.remove();

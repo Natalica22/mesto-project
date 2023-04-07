@@ -48,8 +48,6 @@ const imagePopup = page.querySelector('#popup-image');
 const imagePopupImage = imagePopup.querySelector('.popup__image');
 const imagePopupImageTitle = imagePopup.querySelector('.popup__image-title');
 
-const confirmPopup = page.querySelector('#confirm-popup');
-
 const formValidationConfig = {
   formSelector: '.form',
   inputSelector: '.form__text',
@@ -85,6 +83,14 @@ function resetAvatarEditFormSubmitButton() {
   avatarEditFormSubmitButton.textContent = 'Сохранить';
 }
 
+function resetProfileEditFormSubmitButton() {
+  profileEditFormSubmitButton.textContent = 'Сохранить';
+}
+
+function resetPlaceFormSubmitButton() {
+  placeFormSubmitButton.textContent = 'Создать';
+}
+
 profileAvatar.addEventListener('click', () => {
   resetAvatarEditFormSubmitButton();
   resetForm(avatarEditForm, formValidationConfig);
@@ -105,10 +111,6 @@ avatarEditForm.addEventListener('submit', evt => {
       handleApiError(error);
     });
 });
-
-function resetProfileEditFormSubmitButton() {
-  profileEditFormSubmitButton.textContent = 'Сохранить';
-}
 
 //открытие редактирования профиля
 profileEditButton.addEventListener('click', () => {
@@ -135,10 +137,6 @@ profileEditForm.addEventListener('submit', evt => {
     });
 });
 
-function resetPlaceFormSubmitButton() {
-  placeFormSubmitButton.textContent = 'Создать';
-}
-
 //открытие формы создания места
 placeButton.addEventListener('click', () => {
   resetPlaceFormSubmitButton();
@@ -155,7 +153,7 @@ getUser()
 
     getInitialCards()
       .then(cards => {
-        cards.forEach(card => appendPlaceCard(createPlaceCard(card, placeTemplate, openImagePopup, user._id, confirmPopup)));
+        cards.forEach(card => appendPlaceCard(createPlaceCard(card, placeTemplate, openImagePopup, user._id)));
       })
       .catch(handleApiError);
 
@@ -166,7 +164,7 @@ getUser()
       placeFormSubmitButton.textContent = 'Сохранение...';
       createCard(placeFormNameInput.value, placeFormImageInput.value)
         .then(card => {
-          prependPlaceCard(createPlaceCard(card, placeTemplate, openImagePopup, user._id, confirmPopup));
+          prependPlaceCard(createPlaceCard(card, placeTemplate, openImagePopup, user._id));
           closePopup(placePopup);
         })
         .catch(error => {
