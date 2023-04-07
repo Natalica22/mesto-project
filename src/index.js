@@ -2,7 +2,7 @@ import './pages/index.css';
 import { closePopup, openPopup } from './components/modal';
 import { createPlaceCard } from './components/card';
 import { enableValidation, resetForm, disableSubmitButton } from './components/validate';
-import { getUser, getInitialCards, editUser, createCard, editAvatar } from './components/api';
+import { getUser, getInitialCards, editUser, createCard, editAvatar, handleApiError } from './components/api';
 
 const page = document.querySelector('.page');
 const content = page.querySelector('.content');
@@ -100,7 +100,10 @@ avatarEditForm.addEventListener('submit', evt => {
       updateProfile(user);
       closePopup(avatarEditPopup);
     })
-    .catch(() => resetAvatarEditFormSubmitButton());
+    .catch(error => {
+      resetAvatarEditFormSubmitButton();
+      handleApiError(error);
+    });
 });
 
 function resetProfileEditFormSubmitButton() {
@@ -126,7 +129,10 @@ profileEditForm.addEventListener('submit', evt => {
       updateProfile(user);
       closePopup(profileEditPopup);
     })
-    .catch(() => resetProfileEditFormSubmitButton());
+    .catch(error => {
+      resetProfileEditFormSubmitButton();
+      handleApiError(error);
+    });
 });
 
 function resetPlaceFormSubmitButton() {
@@ -134,7 +140,7 @@ function resetPlaceFormSubmitButton() {
 }
 
 //открытие формы создания места
-placeButton.addEventListener('click', evt => {
+placeButton.addEventListener('click', () => {
   resetPlaceFormSubmitButton();
   resetForm(placeForm, formValidationConfig);
   disableSubmitButton(placeForm, formValidationConfig);
@@ -150,7 +156,8 @@ getUser()
     getInitialCards()
       .then(cards => {
         cards.forEach(card => appendPlaceCard(createPlaceCard(card, placeTemplate, openImagePopup, user._id, confirmPopup)));
-      });
+      })
+      .catch(handleApiError);
 
     //добавление карточки
     placeForm.addEventListener('submit', (evt) => {
@@ -162,8 +169,12 @@ getUser()
           prependPlaceCard(createPlaceCard(card, placeTemplate, openImagePopup, user._id, confirmPopup));
           closePopup(placePopup);
         })
-        .catch(() => resetPlaceFormSubmitButton());
+        .catch(error => {
+          resetPlaceFormSubmitButton();
+          handleApiError(error);
+        });
     });
-  });
+  })
+  .catch(handleApiError);
 
 

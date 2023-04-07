@@ -1,4 +1,4 @@
-import { deleteCard, deleteLikeCard, likeCard } from "./api";
+import { deleteCard, deleteLikeCard, handleApiError, likeCard } from "./api";
 import { closePopup, openPopup } from "./modal";
 
 function setLikes(place, likeButton, likeCount, userId) {
@@ -27,7 +27,8 @@ export function createPlaceCard(place, placeTemplate, openImagePopup, userId, co
 
   likeButton.addEventListener('click', () => {
     (likeButton.classList.contains('place__like-button_active') ? deleteLikeCard(place._id) : likeCard(place._id))
-      .then(place => setLikes(place, likeButton, placeLikeCount, userId));
+      .then(place => setLikes(place, likeButton, placeLikeCount, userId))
+      .catch(handleApiError);
   });
 
   if (place.owner._id === userId) {
@@ -37,7 +38,8 @@ export function createPlaceCard(place, placeTemplate, openImagePopup, userId, co
 
         deleteCard(place._id)
           .then(() => placeCard.remove())
-          .then(() => closePopup(confirmPopup));
+          .then(() => closePopup(confirmPopup))
+          .catch(handleApiError);
       });
       openPopup(confirmPopup);
     });

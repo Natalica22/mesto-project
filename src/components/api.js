@@ -15,7 +15,16 @@ function callApi(resource, method = 'GET', obj) {
     request.body = JSON.stringify(obj);
   }
   return fetch(config.baseUrl + resource, request)
-    .then(res => res.json());
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    });
+}
+
+export function handleApiError(error) {
+  console.log(error);
 }
 
 export function getUser() {
