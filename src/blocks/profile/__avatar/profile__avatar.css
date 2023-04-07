@@ -3,4 +3,10 @@
   height: 120px;
   object-fit: cover;
   border-radius: 50%;
+  transition: opacity .2s ease;
 }
+
+.profile__avatar:hover {
+  opacity: .2;
+}
+
