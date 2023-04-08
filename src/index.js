@@ -42,6 +42,7 @@ function resetPlaceFormSubmitButton() {
 global.profileAvatar.addEventListener('click', () => {
   resetAvatarEditFormSubmitButton();
   resetForm(global.avatarEditForm, global.formValidationConfig);
+  disableSubmitButton(global.avatarEditForm, global.formValidationConfig);
   openPopup(global.avatarEditPopup);
 });
 
