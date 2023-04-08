@@ -3,108 +3,56 @@ import { closePopup, openPopup } from './components/modal';
 import { createPlaceCard } from './components/card';
 import { enableValidation, resetForm, disableSubmitButton } from './components/validate';
 import { getUser, getInitialCards, editUser, createCard, editAvatar, handleApiError } from './components/api';
-
-const page = document.querySelector('.page');
-const content = page.querySelector('.content');
-
-//поиск текущих значений профиля
-const profileAvatar = content.querySelector('.profile__avatar');
-const profileName = content.querySelector('.profile__name');
-const profileAbout = content.querySelector('.profile__about');
-
-const avatarEditPopup = page.querySelector('#avatar-popup');
-const avatarEditForm = avatarEditPopup.querySelector('.form');
-const avatarEditFormUrlInput = avatarEditForm.querySelector('input[name=avatarUrl]');
-const avatarEditFormSubmitButton = avatarEditForm.querySelector('.form__save-button');
-
-// поиск popup для профиля
-const profileEditPopup = page.querySelector('#profile-popup');
-
-// поиск кнопки редактирования профиля
-const profileEditButton = content.querySelector('.profile__edit-button');
-
-//поиск формы и полей для профиля
-const profileEditForm = profileEditPopup.querySelector('.form');
-const profileEditFormNameInput = profileEditForm.querySelector('input[name=name]');
-const profileEditFormAboutInput = profileEditForm.querySelector('input[name=about]');
-const profileEditFormSubmitButton = profileEditForm.querySelector('.form__save-button');
-
-// поиск popup места
-const placePopup = page.querySelector('#place-popup');
-
-//поиск кнопки открытия формы добавления места
-const placeButton = content.querySelector('.profile__add-place-button');
-
-//поиск формы создаения карточки
-const placeForm = placePopup.querySelector('.form');
-const placeFormNameInput = placeForm.querySelector('input[name=name]');
-const placeFormImageInput = placeForm.querySelector('input[name=imageUrl]');
-const placeFormSubmitButton = placeForm.querySelector('.form__save-button');
-
-//поиск шаблона карточки места
-const placeTemplate = content.querySelector('#place').content;
-const placesSection = content.querySelector('.places');
-const imagePopup = page.querySelector('#popup-image');
-const imagePopupImage = imagePopup.querySelector('.popup__image');
-const imagePopupImageTitle = imagePopup.querySelector('.popup__image-title');
-
-const formValidationConfig = {
-  formSelector: '.form',
-  inputSelector: '.form__text',
-  submitButtonSelector: '.form__save-button',
-  inactiveButtonClass: 'form__save-button_inactive',
-  inputErrorClass: 'form__text_type_error',
-  errorClass: 'form__text-error_active'
-};
+import * as global from './components/global';
 
 function updateProfile(user) {
-  profileName.textContent = user.name;
-  profileAbout.textContent = user.about;
-  profileAvatar.src = user.avatar;
+  global.profileName.textContent = user.name;
+  global.profileAbout.textContent = user.about;
+  global.profileAvatar.src = user.avatar;
 }
 
 function openImagePopup(place) {
-  imagePopupImage.src = place.link;
-  imagePopupImage.alt = place.name;
-  imagePopupImageTitle.textContent = place.name;
+  global.imagePopupImage.src = place.link;
+  global.imagePopupImage.alt = place.name;
+  global.imagePopupImageTitle.textContent = place.name;
 
-  openPopup(imagePopup);
+  openPopup(global.imagePopup);
 }
 
 function prependPlaceCard(placeCard) {
-  placesSection.prepend(placeCard);
+  global.placesSection.prepend(placeCard);
 }
 
 function appendPlaceCard(placeCard) {
-  placesSection.append(placeCard);
+  global.placesSection.append(placeCard);
 }
 
 function resetAvatarEditFormSubmitButton() {
-  avatarEditFormSubmitButton.textContent = 'Сохранить';
+  global.avatarEditFormSubmitButton.textContent = 'Сохранить';
 }
 
 function resetProfileEditFormSubmitButton() {
-  profileEditFormSubmitButton.textContent = 'Сохранить';
+  global.profileEditFormSubmitButton.textContent = 'Сохранить';
 }
 
 function resetPlaceFormSubmitButton() {
-  placeFormSubmitButton.textContent = 'Создать';
+  global.placeFormSubmitButton.textContent = 'Создать';
 }
 
-profileAvatar.addEventListener('click', () => {
+global.profileAvatar.addEventListener('click', () => {
   resetAvatarEditFormSubmitButton();
-  resetForm(avatarEditForm, formValidationConfig);
-  openPopup(avatarEditPopup);
+  resetForm(global.avatarEditForm, global.formValidationConfig);
+  openPopup(global.avatarEditPopup);
 });
 
-avatarEditForm.addEventListener('submit', evt => {
+global.avatarEditForm.addEventListener('submit', evt => {
   evt.preventDefault();
 
-  avatarEditFormSubmitButton.textContent = 'Сохранение...';
-  editAvatar(avatarEditFormUrlInput.value)
+  global.avatarEditFormSubmitButton.textContent = 'Сохранение...';
+  editAvatar(global.avatarEditFormUrlInput.value)
     .then(user => {
       updateProfile(user);
-      closePopup(avatarEditPopup);
+      closePopup(global.avatarEditPopup);
     })
     .catch(error => {
       resetAvatarEditFormSubmitButton();
@@ -113,23 +61,23 @@ avatarEditForm.addEventListener('submit', evt => {
 });
 
 //открытие редактирования профиля
-profileEditButton.addEventListener('click', () => {
+global.profileEditButton.addEventListener('click', () => {
   resetProfileEditFormSubmitButton();
-  resetForm(profileEditForm, formValidationConfig);
-  profileEditFormNameInput.value = profileName.textContent;
-  profileEditFormAboutInput.value = profileAbout.textContent;
-  openPopup(profileEditPopup);
+  resetForm(global.profileEditForm, global.formValidationConfig);
+  global.profileEditFormNameInput.value = global.profileName.textContent;
+  global.profileEditFormAboutInput.value = global.profileAbout.textContent;
+  openPopup(global.profileEditPopup);
 });
 
 //сохранение введеных данных в форму редактирования профиля
-profileEditForm.addEventListener('submit', evt => {
+global.profileEditForm.addEventListener('submit', evt => {
   evt.preventDefault();
 
-  profileEditFormSubmitButton.textContent = 'Сохранение...';
-  editUser(profileEditFormNameInput.value, profileEditFormAboutInput.value)
+  global.profileEditFormSubmitButton.textContent = 'Сохранение...';
+  editUser(global.profileEditFormNameInput.value, global.profileEditFormAboutInput.value)
     .then(user => {
       updateProfile(user);
-      closePopup(profileEditPopup);
+      closePopup(global.profileEditPopup);
     })
     .catch(error => {
       resetProfileEditFormSubmitButton();
@@ -138,14 +86,14 @@ profileEditForm.addEventListener('submit', evt => {
 });
 
 //открытие формы создания места
-placeButton.addEventListener('click', () => {
+global.placeButton.addEventListener('click', () => {
   resetPlaceFormSubmitButton();
-  resetForm(placeForm, formValidationConfig);
-  disableSubmitButton(placeForm, formValidationConfig);
-  openPopup(placePopup);
+  resetForm(global.placeForm, global.formValidationConfig);
+  disableSubmitButton(global.placeForm, global.formValidationConfig);
+  openPopup(global.placePopup);
 });
 
-enableValidation(formValidationConfig);
+enableValidation(global.formValidationConfig);
 
 getUser()
   .then(user => {
@@ -153,19 +101,19 @@ getUser()
 
     getInitialCards()
       .then(cards => {
-        cards.forEach(card => appendPlaceCard(createPlaceCard(card, placeTemplate, openImagePopup, user._id)));
+        cards.forEach(card => appendPlaceCard(createPlaceCard(card, global.placeTemplate, openImagePopup, user._id)));
       })
       .catch(handleApiError);
 
     //добавление карточки
-    placeForm.addEventListener('submit', (evt) => {
+    global.placeForm.addEventListener('submit', (evt) => {
       evt.preventDefault();
 
-      placeFormSubmitButton.textContent = 'Сохранение...';
-      createCard(placeFormNameInput.value, placeFormImageInput.value)
+      global.placeFormSubmitButton.textContent = 'Сохранение...';
+      createCard(global.placeFormNameInput.value, global.placeFormImageInput.value)
         .then(card => {
-          prependPlaceCard(createPlaceCard(card, placeTemplate, openImagePopup, user._id));
-          closePopup(placePopup);
+          prependPlaceCard(createPlaceCard(card, global.placeTemplate, openImagePopup, user._id));
+          closePopup(global.placePopup);
         })
         .catch(error => {
           resetPlaceFormSubmitButton();
