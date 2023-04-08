@@ -81,15 +81,13 @@ global.placeButton.addEventListener('click', () => {
 
 enableValidation(global.formValidationConfig);
 
-getUser()
-  .then(user => {
+Promise.all([getUser(), getInitialCards()])
+  .then(result => {
+    const user = result[0];
     updateProfile(user);
 
-    getInitialCards()
-      .then(cards => {
-        cards.forEach(card => appendPlaceCard(createPlaceCard(card, global.placeTemplate, openImagePopup, user._id)));
-      })
-      .catch(handleApiError);
+    const cards = result[1];
+    cards.forEach(card => appendPlaceCard(createPlaceCard(card, global.placeTemplate, openImagePopup, user._id)));
 
     //добавление карточки
     global.placeForm.addEventListener('submit', (evt) => {
@@ -106,5 +104,3 @@ getUser()
     });
   })
   .catch(handleApiError);
-
-
