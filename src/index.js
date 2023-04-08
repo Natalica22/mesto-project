@@ -27,20 +27,12 @@ function appendPlaceCard(placeCard) {
   global.placesSection.append(placeCard);
 }
 
-function resetAvatarEditFormSubmitButton() {
-  global.avatarEditFormSubmitButton.textContent = 'Сохранить';
-}
-
-function resetProfileEditFormSubmitButton() {
-  global.profileEditFormSubmitButton.textContent = 'Сохранить';
-}
-
-function resetPlaceFormSubmitButton() {
-  global.placeFormSubmitButton.textContent = 'Создать';
+function resetFormSubmitButton(button, text) {
+  button.textContent = text;
 }
 
 global.profileAvatar.addEventListener('click', () => {
-  resetAvatarEditFormSubmitButton();
+  resetFormSubmitButton(global.avatarEditFormSubmitButton, 'Сохранить');
   resetForm(global.avatarEditForm, global.formValidationConfig);
   disableSubmitButton(global.avatarEditForm, global.formValidationConfig);
   openPopup(global.avatarEditPopup);
@@ -56,14 +48,14 @@ global.avatarEditForm.addEventListener('submit', evt => {
       closePopup(global.avatarEditPopup);
     })
     .catch(error => {
-      resetAvatarEditFormSubmitButton();
+      resetFormSubmitButton(global.avatarEditFormSubmitButton, 'Сохранить');
       handleApiError(error);
     });
 });
 
 //открытие редактирования профиля
 global.profileEditButton.addEventListener('click', () => {
-  resetProfileEditFormSubmitButton();
+  resetFormSubmitButton(global.profileEditFormSubmitButton, 'Сохранить');
   resetForm(global.profileEditForm, global.formValidationConfig);
   global.profileEditFormNameInput.value = global.profileName.textContent;
   global.profileEditFormAboutInput.value = global.profileAbout.textContent;
@@ -81,14 +73,14 @@ global.profileEditForm.addEventListener('submit', evt => {
       closePopup(global.profileEditPopup);
     })
     .catch(error => {
-      resetProfileEditFormSubmitButton();
+      resetFormSubmitButton(global.profileEditFormSubmitButton, 'Сохранить');
       handleApiError(error);
     });
 });
 
 //открытие формы создания места
 global.placeButton.addEventListener('click', () => {
-  resetPlaceFormSubmitButton();
+  resetFormSubmitButton(global.placeFormSubmitButton, 'Создать');
   resetForm(global.placeForm, global.formValidationConfig);
   disableSubmitButton(global.placeForm, global.formValidationConfig);
   openPopup(global.placePopup);
@@ -117,7 +109,7 @@ getUser()
           closePopup(global.placePopup);
         })
         .catch(error => {
-          resetPlaceFormSubmitButton();
+          resetFormSubmitButton(global.placeFormSubmitButton, 'Создать');
           handleApiError(error);
         });
     });
